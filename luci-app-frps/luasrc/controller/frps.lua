@@ -56,8 +56,8 @@ a.render("frps/file_viewer",
 end
 
 function get_log()
-    luci.http.write(luci.sys.exec("cat /tmp/frps_log_link.txt"))
+	luci.http.write(luci.sys.exec("cat /tmp/frps_log_link.txt"))
 end
 function clear_log()
-    luci.sys.call("true > /tmp/frps_log_link.txt")
+	luci.sys.call("true > /tmp/frps_log_link.txt")
 end
