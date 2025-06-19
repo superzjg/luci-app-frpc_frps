@@ -77,8 +77,7 @@ o:depends("set_firewall", "force")
 o = s:taboption("general", Flag, "enable_logging", translate("启用日志"),
 	translate("Frp 运行日志设置。不含 luci-app 日志（此部分在“系统日志”查看）"))
 
-o = s:taboption("general", Flag, "std_redirect", translate("重定向标准输出"),
-    translate("Frp的标准输出、标准错误重定向到日志文件"))
+o = s:taboption("general", Flag, "std_redirect", translate("重定向标准输出"), translate("Frp的标准输出、标准错误重定向到日志文件"))
 o:depends("enable_logging", "1")
 
 o = s:taboption("general", Value, "log__to", translate("日志文件"),translate("填写文件路径，留空相当于填入 console（日志打印在标准输出中）"))
@@ -99,8 +98,7 @@ o:depends("enable_logging", "1")
 o.datatype = "uinteger"
 o.placeholder = '3'
 
-o = s:taboption("general", Flag, "log__disablePrintColor", translate("禁用日志颜色"), 
-    translate("当日志文件为 console 时禁用日志颜色，默认不禁用"))
+o = s:taboption("general", Flag, "log__disablePrintColor", translate("禁用日志颜色"), translate("当日志文件为 console 时禁用日志颜色，默认不禁用"))
 o:depends("enable_logging", "1")
 o.enabled= "true"
 o.disabled = ""
@@ -132,20 +130,16 @@ o:depends("transport__tcpMux", "")
 o.datatype = "uinteger"
 o.placeholder = "30"
 
-o = s:taboption("basic", Value, "kcpBindPort", translate("KCP绑定端口"), 
-    translatef("UDP端口用于kcp协议，建议不要与QUIC端口冲突；留空以禁用kcp"))
+o = s:taboption("basic", Value, "kcpBindPort", translate("KCP绑定端口"), translatef("UDP端口用于kcp协议，建议不要与QUIC端口冲突；留空以禁用kcp"))
 o.datatype = "port"
 
-o = s:taboption("basic", Value, "quicBindPort", translate("QUIC绑定端口"), 
-    translatef("UDP端口用于quic协议，建议不要与KCP端口冲突；留空以禁用quic"))
+o = s:taboption("basic", Value, "quicBindPort", translate("QUIC绑定端口"), translatef("UDP端口用于quic协议，建议不要与KCP端口冲突；留空以禁用quic"))
 o.datatype = "port"
 
-o = s:taboption("basic", Value, "vhostHTTPPort", translate("虚拟主机HTTP端口"), 
-    translatef("如果希望支持虚拟主机，则必须设定 http 或 https 端口"))
+o = s:taboption("basic", Value, "vhostHTTPPort", translate("虚拟主机HTTP端口"), translatef("如果希望支持虚拟主机，则必须设定 http 或 https 端口"))
 o.datatype = "port"
 
-o = s:taboption("basic", Value, "vhostHTTPSPort", translate("虚拟主机HTTPS端口"), 
-    translatef("注意：frpc 默认禁用了TLS第一个自定义字节，可能影响端口号复用，建议查阅官方文档"))
+o = s:taboption("basic", Value, "vhostHTTPSPort", translate("虚拟主机HTTPS端口"), translatef("注意：frpc 默认禁用了TLS第一个自定义字节，可能影响端口号复用，建议查阅官方文档"))
 o.datatype = "port"
 
 o = s:taboption("advanced", Value, "transport__maxPoolCount", translate("最大连接池大小"),
@@ -178,8 +172,7 @@ o.datatype = "file"
 o = s:taboption("advanced", Value, "transport__tls__trustedCaFile", translate("TLS CA证书路径"))
 o.datatype = "file"
 
-o = s:taboption("advanced", Value, "transport__heartbeatTimeout", translate("心跳超时"),
-    translate("与客户端心跳连接的超时时间（秒），负数禁用，默认-1，因frp默认开启TCP复用（tcpmux）进行心跳检测"))
+o = s:taboption("advanced", Value, "transport__heartbeatTimeout", translate("心跳超时"), translate("与客户端心跳连接的超时时间（秒），负数禁用，默认-1，因frp默认开启TCP复用（tcpmux）进行心跳检测"))
 o.datatype = "integer"
 o.placeholder = "-1"
 
