@@ -13,15 +13,15 @@ uci:foreach("frpc", "server", function(s)
 	if s.alias then
 		server_table[s[".name"]] = s.alias
 	else
-        if not s.serverAddr then
-            s.serverAddr = "0.0.0.0"
-        end
-        if not s.serverPort then
-            s.serverPort = "7000"
-        end
-        local ip = s.serverAddr
-        if s.serverAddr:find(":") then
-            ip = "[%s]" % s.serverAddr
+		if not s.serverAddr then
+			s.serverAddr = "0.0.0.0"
+		end
+		if not s.serverPort then
+			s.serverPort = "7000"
+		end
+		local ip = s.serverAddr
+		if s.serverAddr:find(":") then
+			ip = "[%s]" % s.serverAddr
 		end
 		server_table[s[".name"]] = "%s:%s" % { ip, s.serverPort }
 	end
@@ -86,10 +86,10 @@ for user in util.execi("cat /etc/passwd | cut -d':' -f1") do
 end
 
 o = s:taboption("general", Flag, "enable_logging", translate("日志配置"),
-    translate("Frp 运行日志设置。不含 luci-app 日志（此部分在“系统日志”查看）"))
+	translate("Frp 运行日志设置。不含 luci-app 日志（此部分在“系统日志”查看）"))
 
 o = s:taboption("general", Flag, "std_redirect", translate("重定向标准输出"),
-    translate("Frp的标准输出、标准错误重定向到日志文件"))
+	translate("Frp的标准输出、标准错误重定向到日志文件"))
 o:depends("enable_logging", "1")
 
 o = s:taboption("general", Value, "log__to", translate("日志文件"),translate("填写文件路径，留空相当于填入 console（日志打印在标准输出中）"))
@@ -111,7 +111,7 @@ o.datatype = "uinteger"
 o.placeholder = '3'
 
 o = s:taboption("general", Flag, "log__disablePrintColor", translate("禁用日志颜色"),
-    translate("当日志文件为 console 时禁用日志颜色，默认不禁用"))
+	translate("当日志文件为 console 时禁用日志颜色，默认不禁用"))
 o:depends("enable_logging", "1")
 o.enabled= "true"
 o.disabled = ""
@@ -122,7 +122,7 @@ o:value("false", translate("持续登录"))
 o:value("true", translate("退出程序"))
 
 o = s:taboption("advanced", Value, "transport__poolCount", translate("连接池大小"),
-    translate("提前建立多少个连接，默认值：0"))
+	translate("提前建立多少个连接，默认值：0"))
 o.datatype = "uinteger"
 o.placeholder = '0'
 
@@ -186,16 +186,16 @@ o = s:taboption("advanced", Value, "dnsServer", translate("DNS 服务器"))
 o.datatype = "host"
 
 o = s:taboption("advanced", Value, "natHoleStunServer", translate("Stun 服务器"),
-    translate("xtcp 打洞所需的 stun 服务器地址。留空使用默认地址，当其不可用时，指定新地址"))
+	translate("xtcp 打洞所需的 stun 服务器地址。留空使用默认地址，当其不可用时，指定新地址"))
 o.placeholder = "stun.easyvoip.com:3478"
 
 o = s:taboption("advanced", Value, "transport__heartbeatInterval", translate("心跳间隔"),
-    translate("向服务端发送心跳包的间隔时间（秒），负数关闭，默认-1。若Frps低于v0.39.0或关闭了frp默认开启的TCP复用（tcpmux），则建议配置（常规值30）"))
+	translate("向服务端发送心跳包的间隔时间（秒），负数关闭，默认-1。若Frps低于v0.39.0或关闭了frp默认开启的TCP复用（tcpmux），则建议配置（常规值30）"))
 o.datatype = "integer"
 o.placeholder = "-1"
 
 o = s:taboption("advanced", Value, "transport__heartbeatTimeout", translate("心跳超时"),
-    translate("与服务端心跳的超时时间（秒），负数关闭"))
+	translate("与服务端心跳的超时时间（秒），负数关闭"))
 o.datatype = "integer"
 --o.placeholder = "90"
 

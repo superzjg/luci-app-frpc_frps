@@ -130,8 +130,7 @@ o:depends("type", "udp")
 o = s:option(Value, "serverName", translate("服务端名称"))
 o:depends("visitor", "1")
 
-o = s:option(Value, "serverUser", translate("服务端用户"),
-    translate("要访问的 proxy 所属的用户名, 若为空，默认为当前用户"))
+o = s:option(Value, "serverUser", translate("服务端用户"), translate("要访问的 proxy 所属的用户名, 若为空，默认为当前用户"))
 o:depends("visitor", "1")
 
 o = s:option(Value, "bindAddr", translate("绑定地址"))
@@ -142,16 +141,14 @@ o = s:option(Value, "bindPort", translate("绑定端口"))
 o:depends("visitor", "1")
 o.datatype = "integer"
 
-o = s:option(Value, "allowUsers", translate("允许的访客用户"),
-    translate("若留空，默认只允许同一用户下的 visitor 访问；若指定具体用户，用英文逗号隔开，例如简写为：user1, user2 即可，后台会转换格式"))
+o = s:option(Value, "allowUsers", translate("允许的访客用户"), translate("若留空，默认只允许同一用户下的 visitor 访问；若指定具体用户，用英文逗号隔开，例如简写为：user1, user2 即可，后台会转换格式"))
 o:value("", translate("（空）"))
 o:value("*", translate("所有用户"))
 o:depends({visitor="", type="xtcp"})
 o:depends({visitor="", type="stcp"})
 o:depends({visitor="", type="sudp"})
 
-o = s:option(Flag, "keepTunnelOpen", translate("保持隧道打开"),
-    translate("定期检查隧道状态并尝试保持打开。默认关闭"))
+o = s:option(Flag, "keepTunnelOpen", translate("保持隧道打开"), translate("定期检查隧道状态并尝试保持打开。默认关闭"))
 o.enabled = "true"
 o.disabled = ""
 o:depends({visitor="1", type="xtcp"})
@@ -184,8 +181,7 @@ o:depends("type", "http")
 o:depends("type", "https")
 o:depends("type", "tcpmux")
 
-o = s:option(Value, "locations", translate("location 配置"),
-    translate("指定具体路径，用英文逗号隔开，例如简写为：/, /pic 即可，后台会转换格式"))
+o = s:option(Value, "locations", translate("location 配置"), translate("指定具体路径，用英文逗号隔开，例如简写为：/, /pic 即可，后台会转换格式"))
 o:depends("type", "http")
 
 o = s:option(Value, "hostHeaderRewrite", translate("主机头重写"))
@@ -198,14 +194,12 @@ o:value("", translate("（空）"))
 o:value("server")
 o:value("client")
 
-o = s:option(Flag, "transport__useEncryption", translate("使用加密"), 
-       translate("更安全，但消耗更多系统资源，默认关闭。注意：frp全局默认启用TLS加密，若未禁用，除xtcp外，此处不应开启（重复加密）"))
+o = s:option(Flag, "transport__useEncryption", translate("使用加密"), translate("更安全，但消耗更多系统资源，默认关闭。注意：frp全局默认启用TLS加密，若未禁用，除xtcp外，此处不应开启（重复加密）"))
 o.enabled = "true"
 o.disabled = ""
 o.default = o.disabled
 
-o = s:option(Flag, "transport__useCompression", translate("使用压缩"), 
-       translate("降低数据流量，但消耗更多系统资源，默认关闭"))
+o = s:option(Flag, "transport__useCompression", translate("使用压缩"), translate("降低数据流量，但消耗更多系统资源，默认关闭"))
 o.enabled = "true"
 o.disabled = ""
 o.default = o.disabled

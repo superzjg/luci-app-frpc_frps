@@ -21,17 +21,14 @@ s.addremove = false
 
 o = s:option(Value, "alias", translate("别名"))
 
-o = s:option(Value, "serverAddr", translate("服务端地址"), 
-    translate("地址或域名（支持IPv6）"))
+o = s:option(Value, "serverAddr", translate("服务端地址"), translate("地址或域名（支持IPv6）"))
 o.placeholder = "0.0.0.0"
 
-o = s:option(Value, "serverPort", translate("服务端端口"),
-    translate("依据“通信协议“设定的类型进行填写，<font style='color:red'>例如：</font>协议tcp、kcp、quic分别对应frps的“bindPort”、“kcpBindPort”、“quicBindPort”"))
+o = s:option(Value, "serverPort", translate("服务端端口"), translate("依据“通信协议“设定的类型进行填写，<font style='color:red'>例如：</font>协议tcp、kcp、quic分别对应frps的“bindPort”、“kcpBindPort”、“quicBindPort”"))
 o.datatype = "port"
 o.placeholder = "7000"
 
-o = s:option(ListValue, "auth__method", translate("鉴权方式"),
-    translate("留空默认token，若用oidc请使用通用设置 - 高级选项中的 “额外选项” 添加参数"))
+o = s:option(ListValue, "auth__method", translate("鉴权方式"), translate("留空默认token，若用oidc请使用通用设置 - 高级选项中的 “额外选项” 添加参数"))
 o:value("", translate("（空）"))
 o:value("token")
 o:value("oidc")
@@ -41,8 +38,7 @@ o.password = true
 o:depends("auth__method", "")
 o:depends("auth__method", "token")
 
-o = s:option(Flag, "transport__tcpMux", translate("关闭 TCP 复用"),
-    translate("Frpc 默认开启 tcpMux。提示：frpc 和 frps 要作相同设置"))
+o = s:option(Flag, "transport__tcpMux", translate("关闭 TCP 复用"), translate("Frpc 默认开启 tcpMux。提示：frpc 和 frps 要作相同设置"))
 o.enabled = "false"
 o.disabled = ""
 
