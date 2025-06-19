@@ -1,6 +1,6 @@
 include $(TOPDIR)/rules.mk
 
-PKG_VERSION:=1.0.0-19_cn_sky
+PKG_VERSION:=1.0.0-20_cn_sky
 PKG_RELEASE:=1
 
 LUCI_TITLE:=LuCI support for Frps
