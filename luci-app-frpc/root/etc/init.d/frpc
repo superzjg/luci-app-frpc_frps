@@ -36,46 +36,46 @@ append_options() {
 	for o in "$@" ; do
 		f=""
 		if [ -n "$(echo $o | grep "..INT")" ];then
-            f=1
-            o=${o//..INT/}
+			f=1
+			o=${o//..INT/}
 		fi
-        if [ -n "$(echo $o | grep "..ARR")" ];then
-            f=2
-            o=${o//..ARR/}
-        fi
+		if [ -n "$(echo $o | grep "..ARR")" ];then
+			f=2
+			o=${o//..ARR/}
+		fi
 		eval v=\$${o//./__}
 		if [ -n "$v" ] ; then
 			[ "$f" == "" ] && echo "$o = \"$v\"" >>"$file"
 			[ "$f" == "1" ] && echo "$o = $v" >>"$file"
-            if [ "$f" == "2" ];then
-                local T M
-                M=""
-                # 逗号替换为空格
-                v=${v//,/ }
-                # 查找单个的 * ，替换为 "*" 。
-                if [ -n "$(echo "$v" | grep "^\* \| \* \| \*$")" ];then
-                    v="${v//\*/\"*\"}"
-                fi
-                [ "$v" == "*" ] && v=\"*\"
-                for T in $v ; do
-                    # 忽略单个的 ' 或 " 符。
-                    if [ "${T:0:1}" == "\"" -o "${T:0:1}" == "'" ] && [ "${#T}" == "1" ];then
-                        continue
-                    fi
-                    # 除首尾同是 " 或同是 ' 外，删除所有 ' 或 " ，并补全首尾的 " 。
- #                   if [ "${T:0:1}" == "\"" -a "${T: -1}" == "\"" ] || [ "${T:0:1}" == "'" -a "${T: -1}" == "'" ];then
+			if [ "$f" == "2" ];then
+				local T M
+				M=""
+				# 逗号替换为空格
+				v=${v//,/ }
+				# 查找单个的 * ，替换为 "*" 。
+				if [ -n "$(echo "$v" | grep "^\* \| \* \| \*$")" ];then
+					v="${v//\*/\"*\"}"
+				fi
+				[ "$v" == "*" ] && v=\"*\"
+				for T in $v ; do
+					# 忽略单个的 ' 或 " 符。
+					if [ "${T:0:1}" == "\"" -o "${T:0:1}" == "'" ] && [ "${#T}" == "1" ];then
+						continue
+					fi
+					# 除首尾同是 " 或同是 ' 外，删除所有 ' 或 " ，并补全首尾的 " 。
+ #				   if [ "${T:0:1}" == "\"" -a "${T: -1}" == "\"" ] || [ "${T:0:1}" == "'" -a "${T: -1}" == "'" ];then
 					if [ "${T:0:1}" == "\"" -a "$(echo -n "$T" | tail -c 1)" == "\"" ] || [ "${T:0:1}" == "'" -a "$(echo -n "$T" | tail -c 1)" == "'" ];then
 						true
-                    else
-                        T=${T//\'/}
-                        T=\"${T//\"/}\"
-                    fi
-                    # 用逗号+空格组合
-                    [ -n "$M" ] && M="$M, "
-                    M=$M$T
-                done
-                echo "$o = [$M]" >>"$file"
-            fi
+					else
+						T=${T//\'/}
+						T=\"${T//\"/}\"
+					fi
+					# 用逗号+空格组合
+					[ -n "$M" ] && M="$M, "
+					M=$M$T
+				done
+				echo "$o = [$M]" >>"$file"
+			fi
 		fi
 	done
 }
@@ -212,7 +212,7 @@ add_frpc_rule() {
 		return 1
 	fi
 
-    if [ "x$enabled" != "x1" ] ; then
+	if [ "x$enabled" != "x1" ] ; then
 		return 0
 	fi
 
@@ -223,35 +223,35 @@ add_frpc_rule() {
 
 	echo "" >>"$file"
 	if [ "$visitor" == "1" ];then
-        echo "[[visitors]]" >>"$file"
-	    
-        append_options "$file" \
-            "name" "type" "serverUser" "serverName" "secretKey" "bindAddr" "bindPort..INT" "keepTunnelOpen..INT" \
-            "maxRetriesAnHour..INT" "minRetryInterval..INT" "transport.useEncryption..INT" "transport.useCompression..INT"
-            
-        config_list_foreach "$section" "extra_options" add_rule_extra_option "$file"
+		echo "[[visitors]]" >>"$file"
+		
+		append_options "$file" \
+			"name" "type" "serverUser" "serverName" "secretKey" "bindAddr" "bindPort..INT" "keepTunnelOpen..INT" \
+			"maxRetriesAnHour..INT" "minRetryInterval..INT" "transport.useEncryption..INT" "transport.useCompression..INT"
+			
+		config_list_foreach "$section" "extra_options" add_rule_extra_option "$file"
 	else
-        echo "[[proxies]]" >>"$file"
+		echo "[[proxies]]" >>"$file"
 
-        append_options "$file" \
-		    "name" "type" "secretKey" "multiplexer" "localIP" "localPort..INT" "remotePort..INT" "allowUsers..ARR" \
-		    "transport.bandwidthLimit" "transport.bandwidthLimitMode" "transport.useEncryption..INT" "transport.useCompression..INT" \
-		    "httpUser" "httpPassword" "subdomain" "customDomains..ARR" "locations..ARR" "hostHeaderRewrite" \
-		    "transport.proxyProtocolVersion" "loadBalancer.group" "loadBalancer.groupKey" "healthCheck.type" "healthCheck.path" \
-		    "healthCheck.timeoutSeconds..INT" "healthCheck.maxFailed..INT" "healthCheck.intervalSeconds..INT"
+		append_options "$file" \
+			"name" "type" "secretKey" "multiplexer" "localIP" "localPort..INT" "remotePort..INT" "allowUsers..ARR" \
+			"transport.bandwidthLimit" "transport.bandwidthLimitMode" "transport.useEncryption..INT" "transport.useCompression..INT" \
+			"httpUser" "httpPassword" "subdomain" "customDomains..ARR" "locations..ARR" "hostHeaderRewrite" \
+			"transport.proxyProtocolVersion" "loadBalancer.group" "loadBalancer.groupKey" "healthCheck.type" "healthCheck.path" \
+			"healthCheck.timeoutSeconds..INT" "healthCheck.maxFailed..INT" "healthCheck.intervalSeconds..INT"
 
-        config_list_foreach "$section" "extra_options" add_rule_extra_option "$file"
+		config_list_foreach "$section" "extra_options" add_rule_extra_option "$file"
 	
-        if [ -n "$PlUgIn_type" ];then
-            echo "[proxies.plugin]" >>"$file"
+		if [ -n "$PlUgIn_type" ];then
+			echo "[proxies.plugin]" >>"$file"
 
-            append_options "$file" \
-                "PlUgIn_type" "unixPath" "username" "password" "localPath" \
-                "stripPrefix" "PlUgIn_httpUser" "PlUgIn_httpPassword" "localAddr" \
-                "crtPath" "keyPath" "PlUgIn_hostHeaderRewrite"
+			append_options "$file" \
+				"PlUgIn_type" "unixPath" "username" "password" "localPath" \
+				"stripPrefix" "PlUgIn_httpUser" "PlUgIn_httpPassword" "localAddr" \
+				"crtPath" "keyPath" "PlUgIn_hostHeaderRewrite"
 
-            config_list_foreach "$section" "extra_options_plugin" add_rule_extra_option "$file"
-	    fi
+			config_list_foreach "$section" "extra_options_plugin" add_rule_extra_option "$file"
+		fi
 	fi
 	# 将插件参数中PlUgIn_前缀删除（因rule有同名参数已在uci中区分）
 	sed -i 's/^PlUgIn_//g' "$file"
@@ -285,45 +285,45 @@ create_config_file() {
 	config_foreach add_frpc_rule "rule" "$tmp_file"
 
 #	sed '/^$/d' "$tmp_file" >"$config_file" #注释以保留空行
-    cp -f "$tmp_file" "$config_file"
+	cp -f "$tmp_file" "$config_file"
 
 	if [ "$?" = "0" ] ; then
 		rm -f "$tmp_file"
 	fi
 }
 logfile_prepare() {
-    if [ "x$enable_logging" != "x1" ];then
-        rm -f /tmp/frpc_log_link.txt
-        rm -f /tmp/frpc_std_redirect.log
-        echo "未配置日志输出保存" > /tmp/frpc_log_link.txt
-        return 1
-    fi
-    
-    if [ "${std_redirect}" == "1" ];then
-        if [ -z "${log__to}" -o "${log__to}" == "console" ];then
-            log__to=/tmp/frpc_std_redirect.log
-            true >"${log__to}"
-        else
-            mkdir -p "$(dirname "${log__to}")"
-            touch "${log__to}"
-            if [ "$?" != "0" ];then
-                log__to=/tmp/frpc_std_redirect.log
-                echo "【$(date +%Y-%m-%d_%H:%M:%S)】--->警告：配置的日志文件路径似乎无效/只读！" > "${log__to}"
-            fi
-        fi
-    fi
-    
-    if [ -n "${log__to}" -a "${log__to}" != "console" ];then
-        mkdir -p "$(dirname "${log__to}")"
-        touch "${log__to}"
-    fi
-    
-    if [ -n "$run_user" ]; then
-        chmod 644 "$log__to"
-        chown "$run_user" "$log__to"
-    fi
-    # 创建log文件读取链接，用于luci查看日志
-    ln -sf "${log__to}" /tmp/frpc_log_link.txt
+	if [ "x$enable_logging" != "x1" ];then
+		rm -f /tmp/frpc_log_link.txt
+		rm -f /tmp/frpc_std_redirect.log
+		echo "未配置日志输出保存" > /tmp/frpc_log_link.txt
+		return 1
+	fi
+	
+	if [ "${std_redirect}" == "1" ];then
+		if [ -z "${log__to}" -o "${log__to}" == "console" ];then
+			log__to=/tmp/frpc_std_redirect.log
+			true >"${log__to}"
+		else
+			mkdir -p "$(dirname "${log__to}")"
+			touch "${log__to}"
+			if [ "$?" != "0" ];then
+				log__to=/tmp/frpc_std_redirect.log
+				echo "【$(date +%Y-%m-%d_%H:%M:%S)】--->警告：配置的日志文件路径似乎无效/只读！" > "${log__to}"
+			fi
+		fi
+	fi
+	
+	if [ -n "${log__to}" -a "${log__to}" != "console" ];then
+		mkdir -p "$(dirname "${log__to}")"
+		touch "${log__to}"
+	fi
+	
+	if [ -n "$run_user" ]; then
+		chmod 644 "$log__to"
+		chown "$run_user" "$log__to"
+	fi
+	# 创建log文件读取链接，用于luci查看日志
+	ln -sf "${log__to}" /tmp/frpc_log_link.txt
 }
 start_instance() {
 	local section="$1"
@@ -366,8 +366,8 @@ start_instance() {
 
 	procd_open_instance "$NAME.$section"
 	if [ "${std_redirect}" == "1" ];then
-	    procd_set_param command "/bin/sh"
-	    procd_append_param command -c "exec $client_file -c $config_file >>\"${log__to}\" 2>&1"
+		procd_set_param command "/bin/sh"
+		procd_append_param command -c "exec $client_file -c $config_file >>\"${log__to}\" 2>&1"
 	else
 		procd_set_param command "$client_file"
 		procd_append_param command -c "$config_file"
